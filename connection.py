@@ -26,19 +26,18 @@ def init_db(force: bool = False):
                         (
                         id INTEGER PRIMARY KEY NOT NULL,
                         user_id INTEGER NOT NULL,
-                        first_name TEXT,
-                        last_name TEXT,
+                        username TEXT,
                         user_sum INTEGER);
                         ''')
     # save changes
     conn.commit()
 
 
-def add_test_user(name, surname, number, id):
+def add_test_user(username, number, id):
     conn = get_connection()
     c = conn.cursor()
     c.execute(
-        f'INSERT INTO USERS (user_id, first_name, last_name, user_sum) VALUES ({id}, "{name}", "{surname}", {number})')
+        f'INSERT INTO USERS (user_id, username, user_sum) VALUES ({id}, "{username}", {number})')
     conn.commit()
 
 

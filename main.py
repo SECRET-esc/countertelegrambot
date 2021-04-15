@@ -16,7 +16,7 @@ def send_welcome(message):
     global chat_id
     global is_autorizated
     chat_id = message.chat.id
-    if database.registerUser(message.from_user.first_name, message.from_user.last_name, message.from_user.id):
+    if database.registerUser(message.from_user.username, message.from_user.id):
         bot.send_message(chat_id, "Привет, ты зарегестрирован и можешь работать!")
         is_autorizated = True
         send_menu(message)
@@ -95,9 +95,9 @@ def show_sum(message):
     string = ''
     i = 1
     for row in res:
-        string += f' {i}. {row[2]} {row[3]} - {row[4]}\n\n'
+        string += f'{i}. {row[2]} - {row[3]}\n\n'
         i = i + 1
-    bot.send_message(message.chat.id, f"Топ 3 суммы на данный момент:\n\n {string}", reply_markup=getButtonBackShow())
+    bot.send_message(message.chat.id, f"Топ 3 суммы на данный момент:\n\n{string}", reply_markup=getButtonBackShow())
     # send_menu(message)
 
 
