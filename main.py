@@ -29,7 +29,7 @@ def send_welcome(message):
 def gen_markup():
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
-    markup.add(InlineKeyboardButton("Посмотреть сумму 💵", callback_data="show_sum"), InlineKeyboardButton("Добавить сумму 💰", callback_data="add_sum"))
+    markup.add(InlineKeyboardButton("Посмотреть текущие результаты 💵", callback_data="show_sum"), InlineKeyboardButton("Добавить сумму 💰", callback_data="add_sum"))
     return markup
 
 
