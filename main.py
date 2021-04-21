@@ -17,9 +17,12 @@ def send_welcome(message):
     global is_autorizated
     chat_id = message.chat.id
     if database.registerUser(message.from_user.username, message.from_user.id):
-        bot.send_message(chat_id, "Привет, ты зарегестрирован и можешь работать!")
-        is_autorizated = True
-        send_menu(message)
+        try:
+            bot.send_message(chat_id, "Привет, ты зарегестрирован и можешь работать!")
+            is_autorizated = True
+            send_menu(message)
+        except Exception as E:
+            print(E)
     else:
         # bot.send_message(chat_id, "Ты уже зарегестрирован!")
         is_autorizated = True
@@ -40,9 +43,12 @@ def callback_query(call):
         wait_show = True
         show_sum(call.message)
     elif call.data == "add_sum":
-        global wait_sum
-        wait_sum = True
-        bot.send_message(call.message.chat.id, 'Введи сумму:')
+        try:
+            global wait_sum
+            wait_sum = True
+            bot.send_message(call.message.chat.id, 'Введи сумму:')
+        except Exception as E:
+            print(E)
         # bot.answer_callback_query(call.id, "Answer is No")
     elif call.data == "backShow":
         wait_show = False
@@ -50,7 +56,10 @@ def callback_query(call):
 
 
 def send_menu(message):
-    bot.send_message(message.chat.id, "Добро пожаловать!", reply_markup=gen_markup())
+    try:
+        bot.send_message(message.chat.id, "Добро пожаловать!", reply_markup=gen_markup())
+    except Exception as E:
+        print(E)
 
 
 # Handle all other messages with content_type 'text' (content_types defaults to ['text'])
@@ -61,15 +70,24 @@ def echo_message(message):
         if wait_sum:
             if message.text.isnumeric():
                 if database.addSum(message.text, message.from_user.id):
-                    bot.send_message(message.chat.id, "Получилось!🎉 Данные успешно сохранены!", reply_markup=getButtonBackShow())
-                    wait_sum = False
+                    try:
+                        bot.send_message(message.chat.id, "Получилось!🎉 Данные успешно сохранены!", reply_markup=getButtonBackShow())
+                        wait_sum = False
+                    except Exception as E:
+                        print(E)
                 else:
-                    bot.send_message(message.chat.id, "Ошибка!😔 Что-то пошло не так!", reply_markup=getButtonBackShow())
-                    wait_sum = False
+                    try:
+                        bot.send_message(message.chat.id, "Ошибка!😔 Что-то пошло не так!", reply_markup=getButtonBackShow())
+                        wait_sum = False
+                    except Exception as E:
+                        print(E)
 
             else:
-                bot.send_message(message.chat.id, "Сумма должна указыватся в положительных цифрах! \n\n Пример:\n\n  900", reply_markup=getButtonBackShow())
-                wait_sum = False
+                try:
+                    bot.send_message(message.chat.id, "Сумма должна указыватся в положительных цифрах! \n\n Пример:\n\n  900", reply_markup=getButtonBackShow())
+                    wait_sum = False
+                except Exception as E:
+                    print(E)
         else:
             send_menu(message)
     else:
@@ -98,8 +116,14 @@ def show_sum(message):
     for row in res:
         string += f'{i}. {row[2]} - {row[3]}\n\n'
         i = i + 1
-    bot.send_message(message.chat.id, f"Топ 3 суммы на данный момент:\n\n{string}", reply_markup=getButtonBackShow())
+    try:
+        bot.send_message(message.chat.id, f"Топ 3 суммы на данный момент:\n\n{string}", reply_markup=getButtonBackShow())
+    except Exception as E:
+        print(E)
     # send_menu(message)
 
 
-bot.polling()
+try:
+    bot.polling()
+except Exception as E:
+    print(E)
