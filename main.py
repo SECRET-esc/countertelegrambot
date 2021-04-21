@@ -42,7 +42,7 @@ def callback_query(call):
     elif call.data == "add_sum":
         global wait_sum
         wait_sum = True
-        bot.send_message(call.message.chat.id, 'Введи сумму которую ты хочешь добавить (твое имя будет добавленно автоматически)')
+        bot.send_message(call.message.chat.id, 'Введи сумму:')
         # bot.answer_callback_query(call.id, "Answer is No")
     elif call.data == "backShow":
         wait_show = False
@@ -50,7 +50,7 @@ def callback_query(call):
 
 
 def send_menu(message):
-    bot.send_message(message.chat.id, "Добро пожаловать в меню!", reply_markup=gen_markup())
+    bot.send_message(message.chat.id, "Добро пожаловать!", reply_markup=gen_markup())
 
 
 # Handle all other messages with content_type 'text' (content_types defaults to ['text'])
@@ -91,6 +91,7 @@ def getButtonBackAdd():
 
 
 def show_sum(message):
+    # res = database.clearData()
     res = database.showSum()
     string = ''
     i = 1

@@ -42,11 +42,7 @@ def showSum():
     return array
 
 
-
-
-
-
-
-
-
-
+def clearData():
+    conn = connection.get_connection()
+    c = conn.cursor()
+    c.execute('DELETE FROM USERS')
